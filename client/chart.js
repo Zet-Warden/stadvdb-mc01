@@ -13,7 +13,7 @@ async function generateChart({
 
     const res = await fetch(`/api?${queryParams}`);
     const data = await res.json();
-
+    console.log(data);
     const ctx = chart.getContext('2d');
     new Chart(ctx, {
         type: type,
@@ -25,11 +25,13 @@ async function generateChart({
                     backgroundColor: backgroundColor,
                     borderColor: borderColor,
                     borderWidth: 1,
+                    borderWidth: 3,
                 },
             ],
         },
         options: {
             responsive: true,
+            legend: false,
             scales: {
                 x: {},
                 y: {

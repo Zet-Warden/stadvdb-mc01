@@ -18,19 +18,118 @@
         <header class="h-11 bg-gray-800 h-max" style="height: max-content">
             <nav class="px-7 py-3">
                 <div class="flex items-center">
-                    <img
-                        class="w-12"
-                        src="glyph-elastic-cluster-color.svg"
-                        alt=""
-                    />
+                    <img class="w-12" src="elastic-logo.svg" alt="" />
                     <p class="pl-2 font-semibold text-3xl text-white">
                         Elastoc
                     </p>
                 </div>
             </nav>
         </header>
-        <div>
-            <canvas id="myChart"></canvas>
-        </div>
+        <main class="p-7">
+            <div class="chart-container flex flex-wrap">
+                <!-- Roll-Up Chart -->
+                <div class="w-1/2 p-4">
+                    <p class="title text-center text-4xl font-semibold">
+                        Roll-Up
+                    </p>
+                    <canvas id="myChart"></canvas>
+                    <div class="flex justify-end">
+                        <button
+                            class="
+                                border-2 border-solid border-blue-900
+                                px-2
+                                py-1
+                                bg-blue-100
+                                hover:bg-blue-50
+                            "
+                        >
+                            Query
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Drill-Down Chart -->
+                <div class="w-1/2 p-4">
+                    <p class="title text-center text-4xl font-semibold">
+                        Drill-Down
+                    </p>
+                    <canvas id="myChart2" style="width: 100%"></canvas>
+                    <div class="flex justify-end">
+                        <button
+                            class="
+                                border-2 border-solid border-blue-900
+                                px-2
+                                py-1
+                                bg-blue-100
+                                hover:bg-blue-50
+                            "
+                        >
+                            Query
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Slice Chart -->
+                <div class="w-1/2 p-4">
+                    <p class="title text-center text-4xl font-semibold">
+                        Slice
+                    </p>
+                    <canvas id="myChart3"></canvas>
+                    <div class="flex justify-end">
+                        <button
+                            class="
+                                border-2 border-solid border-blue-900
+                                px-2
+                                py-1
+                                bg-blue-100
+                                hover:bg-blue-50
+                            "
+                        >
+                            Query
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dice Chart -->
+                <div class="w-1/2 p-4">
+                    <p class="title text-center text-4xl font-semibold">Dice</p>
+                    <canvas id="myChart4"></canvas>
+                    <div class="flex justify-end">
+                        <button
+                            class="
+                                border-2 border-solid border-blue-900
+                                px-2
+                                py-1
+                                bg-blue-100
+                                hover:bg-blue-50
+                            "
+                        >
+                            Query
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pivot Chart -->
+                <div class="w-1/2 p-4">
+                    <p class="title text-center text-4xl font-semibold">
+                        Pivot
+                    </p>
+                    <canvas id="myChart5"></canvas>
+                    <div class="flex justify-end">
+                        <button
+                            class="
+                                border-2 border-solid border-blue-900
+                                px-2
+                                py-1
+                                bg-blue-100
+                                hover:bg-blue-50
+                            "
+                        >
+                            Query
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
     </body>
 </html>
