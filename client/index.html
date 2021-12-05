@@ -4,19 +4,23 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@^3"></script> -->
+        <title>[STADVDB] MC01</title>
         <script src="./highcharts.js"></script>
-        <!-- <script src="https://cdn.jsdelivr.net/npm/luxon@^2"></script> -->
-        <!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@^1"></script> -->
-        <script src="script.js" type="module" defer></script>
+        <script src="https://code.highcharts.com/modules/treemap.js"></script>
+        <script src="./rollup.js" type="module" defer></script>
+        <script src="./pivot.js" type="module" defer></script>
+        <script src="./drilldown.js" type="module" defer></script>
+        <script src="./dice.js" type="module" defer></script>
         <link
             href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
             rel="stylesheet"
         />
     </head>
-    <body class="min-h-screen">
-        <header class="h-11 bg-gray-800 h-max" style="height: max-content">
+    <body class="min-h-screen grid place-items-center">
+        <header
+            class="h-11 bg-gray-800 h-max w-full"
+            style="height: max-content"
+        >
             <nav class="px-7 py-3">
                 <div class="flex items-center">
                     <img class="w-12" src="elastic-logo.svg" alt="" />
@@ -26,116 +30,734 @@
                 </div>
             </nav>
         </header>
-        <main class="p-7">
+        <main class="container p-7">
             <div class="chart-container flex flex-wrap">
                 <!-- Roll-Up Chart -->
-                <div class="w-1/2 p-4">
-                    <p class="title text-center text-4xl font-semibold">
-                        Roll-Up
-                    </p>
-                    <div id="myChart" style="width: 100%"></div>
-                    <!-- <canvas id="myChart"></canvas> -->
-                    <div class="flex justify-end">
-                        <button
-                            class="
-                                border-2 border-solid border-blue-900
-                                px-2
-                                py-1
-                                bg-blue-100
-                                hover:bg-blue-50
-                            "
-                        >
-                            Query
-                        </button>
-                    </div>
-                </div>
+                <div class="w-full mb-12">
+                    <div class="flex">
+                        <div
+                            id="myChart"
+                            class="flex-1"
+                            style="aspect-ratio: 16/9"
+                        ></div>
 
-                <!-- Drill-Down Chart -->
-                <div class="w-1/2 p-4">
-                    <p class="title text-center text-4xl font-semibold">
-                        Roll-Up
-                    </p>
-                    <div id="myChart2" style="width: 100%"></div>
-                    <!-- <canvas id="myChart"></canvas> -->
-                    <div class="flex justify-end">
-                        <button
-                            class="
-                                border-2 border-solid border-blue-900
-                                px-2
-                                py-1
-                                bg-blue-100
-                                hover:bg-blue-50
-                            "
-                        >
-                            Query
-                        </button>
-                    </div>
-                </div>
+                        <!-- form for genre -->
+                        <form action="" id="rollup-form-genre">
+                            <p class="font-semibold">GENRE</p>
+                            <div
+                                class="
+                                    input-container
+                                    flex
+                                    justify-evenly
+                                    flex-col
+                                "
+                            >
+                                <label class="mr-3">
+                                    <input
+                                        type="checkbox"
+                                        id="rollup-all-genre"
+                                        name="rollup-all"
+                                        value="All"
+                                        checked
+                                    />
+                                    All
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-action"
+                                        name="rollup-action"
+                                        value="'Action'"
+                                    />
+                                    Action
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-adult"
+                                        name="rollup-adult"
+                                        value="'Adult'"
+                                    />
+                                    Adult
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-adventure"
+                                        name="rollup-adventure"
+                                        value="'Adventure'"
+                                    />
+                                    Adventure
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-animation"
+                                        name="rollup-animation"
+                                        value="'Animation'"
+                                    />
+                                    Animation
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-comedy"
+                                        name="rollup-comedy"
+                                        value="'Comedy'"
+                                    />
+                                    Comedy
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-crime"
+                                        name="rollup-crime"
+                                        value="'Crime'"
+                                    />
+                                    Crime
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-documentary"
+                                        name="rollup-documentary"
+                                        value="'Documentary'"
+                                    />
+                                    Documentary
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-drama"
+                                        name="rollup-drama"
+                                        value="'Drama'"
+                                    />
+                                    Drama
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-family"
+                                        name="rollup-family"
+                                        value="'Family'"
+                                    />
+                                    Family
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-fantasy"
+                                        name="rollup-fantasy"
+                                        value="'Fantasy'"
+                                    />
+                                    Fantasy
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-film-noir"
+                                        name="rollup-film-noir"
+                                        value="'Film-Noir'"
+                                    />
+                                    Film-Noir
+                                </label>
+                            </div>
+                            <!-- second line of cb -->
+                            <div
+                                class="
+                                    input-container
+                                    flex flex-col
+                                    justify-evenly
+                                    mb-4
+                                "
+                            >
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-horror"
+                                        name="rollup-horror"
+                                        value="'Horror'"
+                                    />
+                                    Horror
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-music"
+                                        name="rollup-music"
+                                        value="'Music'"
+                                    />
+                                    Music
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-musical"
+                                        name="rollup-musical"
+                                        value="'Musical'"
+                                    />
+                                    Musical
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-mystery"
+                                        name="rollup-mystery"
+                                        value="'Mystery'"
+                                    />
+                                    Mystery
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-romance"
+                                        name="rollup-romance"
+                                        value="'Romance'"
+                                    />
+                                    Romance
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-sci-fi"
+                                        name="rollup-sci-fi"
+                                        value="'Sci-Fi'"
+                                    />
+                                    Sci-Fi
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-short"
+                                        name="rollup-short"
+                                        value="'Short'"
+                                    />
+                                    Short
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-thriller"
+                                        name="rollup-thriller"
+                                        value="'Thriller'"
+                                    />
+                                    Thriller
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-war"
+                                        name="rollup-war"
+                                        value="'War'"
+                                    />
+                                    War
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb"
+                                        type="checkbox"
+                                        id="rollup-western"
+                                        name="rollup-western"
+                                        value="'Western'"
+                                    />
+                                    Western
+                                </label>
+                            </div>
+                        </form>
 
-                <!-- Slice Chart -->
-                <div class="w-1/2 p-4">
-                    <p class="title text-center text-4xl font-semibold">
-                        Roll-Up
-                    </p>
-                    <div id="myChart3" style="width: 100%"></div>
-                    <!-- <canvas id="myChart"></canvas> -->
-                    <div class="flex justify-end">
-                        <button
-                            class="
-                                border-2 border-solid border-blue-900
-                                px-2
-                                py-1
-                                bg-blue-100
-                                hover:bg-blue-50
-                            "
-                        >
-                            Query
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Dice Chart -->
-                <div class="w-1/2 p-4">
-                    <p class="title text-center text-4xl font-semibold">
-                        Roll-Up
-                    </p>
-                    <div id="myChart4" style="width: 100%"></div>
-                    <!-- <canvas id="myChart"></canvas> -->
-                    <div class="flex justify-end">
-                        <button
-                            class="
-                                border-2 border-solid border-blue-900
-                                px-2
-                                py-1
-                                bg-blue-100
-                                hover:bg-blue-50
-                            "
-                        >
-                            Query
-                        </button>
+                        <!-- form for year -->
+                        <form action="" id="rollup-form-year">
+                            <p class="font-semibold">YEAR</p>
+                            <div
+                                class="
+                                    input-container
+                                    flex
+                                    justify-evenly
+                                    flex-col
+                                "
+                            >
+                                <label class="mr-3">
+                                    <input
+                                        type="checkbox"
+                                        id="rollup-all-year"
+                                        name="rollup-all"
+                                        value="1890-2009"
+                                        checked
+                                    />
+                                    All Time
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb-year"
+                                        type="checkbox"
+                                        value="1890-1899"
+                                    />
+                                    1890s
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb-year"
+                                        type="checkbox"
+                                        value="1900-1909"
+                                    />
+                                    1900s
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb-year"
+                                        type="checkbox"
+                                        value="1910-1919"
+                                    />
+                                    1910s
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb-year"
+                                        type="checkbox"
+                                        value="1920-1929"
+                                    />
+                                    1920s
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb-year"
+                                        type="checkbox"
+                                        value="1930-1939"
+                                    />
+                                    1930s
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb-year"
+                                        type="checkbox"
+                                        value="1940-1949"
+                                    />
+                                    1940s
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb-year"
+                                        type="checkbox"
+                                        value="1950-1959"
+                                    />
+                                    1950s
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb-year"
+                                        type="checkbox"
+                                        value="1960-1969"
+                                    />
+                                    1960s
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb-year"
+                                        type="checkbox"
+                                        value="1970-1979"
+                                    />
+                                    1970s
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb-year"
+                                        type="checkbox"
+                                        value="1980-1989"
+                                    />
+                                    1980s
+                                </label>
+                            </div>
+                            <!-- second line of cb -->
+                            <div
+                                class="
+                                    input-container
+                                    flex flex-col
+                                    justify-evenly
+                                    mb-4
+                                "
+                            >
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb-year"
+                                        type="checkbox"
+                                        value="1990-1999"
+                                    />
+                                    1990s
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="rollup-cb-year"
+                                        type="checkbox"
+                                        value="2000-2009"
+                                    />
+                                    2000s
+                                </label>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
                 <!-- Pivot Chart -->
-                <div class="w-1/2 p-4">
-                    <p class="title text-center text-4xl font-semibold">
-                        Roll-Up
-                    </p>
-                    <div id="myChart5" style="width: 100%"></div>
-                    <!-- <canvas id="myChart"></canvas> -->
-                    <div class="flex justify-end">
-                        <button
-                            class="
-                                border-2 border-solid border-blue-900
-                                px-2
-                                py-1
-                                bg-blue-100
-                                hover:bg-blue-50
-                            "
-                        >
-                            Query
-                        </button>
+                <div class="w-full mb-24">
+                    <div class="flex">
+                        <!-- chart and slider -->
+                        <div class="relative flex flex-col flex-1">
+                            <div
+                                id="myChart2"
+                                class="flex-1"
+                                style="aspect-ratio: 16/9"
+                            ></div>
+                            <div
+                                class="
+                                    slidecontainer
+                                    flex flex-col
+                                    justify-end
+                                    mb-6
+                                    absolute
+                                    right-0
+                                    w-full
+                                "
+                                style="top: 100%"
+                            >
+                                <input
+                                    type="range"
+                                    min="10"
+                                    max="228"
+                                    value="10"
+                                    class="slider w-full"
+                                    id="pivot-slider"
+                                />
+                                <p class="text-xl ml-4 text-center">
+                                    Min Number of Movies:
+                                    <span id="pivot-min-counter">10</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- genre checkboxes -->
+                        <form action="" id="pivot-form-genre">
+                            <p class="font-semibold">GENRE</p>
+                            <div
+                                class="
+                                    input-container
+                                    flex
+                                    justify-evenly
+                                    flex-col
+                                "
+                            >
+                                <label class="mr-3">
+                                    <input
+                                        type="checkbox"
+                                        id="pivot-all-genre"
+                                        name="rollup-all"
+                                        value="All"
+                                        checked
+                                    />
+                                    All
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Action'"
+                                    />
+                                    Action
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Adult'"
+                                    />
+                                    Adult
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Adventure'"
+                                    />
+                                    Adventure
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Animation'"
+                                    />
+                                    Animation
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Comedy'"
+                                    />
+                                    Comedy
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Crime'"
+                                    />
+                                    Crime
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Documentary'"
+                                    />
+                                    Documentary
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Drama'"
+                                    />
+                                    Drama
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Family'"
+                                    />
+                                    Family
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Fantasy'"
+                                    />
+                                    Fantasy
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Film-Noir'"
+                                    />
+                                    Film-Noir
+                                </label>
+                            </div>
+                            <!-- second line of cb -->
+                            <div
+                                class="
+                                    input-container
+                                    flex flex-col
+                                    justify-evenly
+                                    mb-4
+                                "
+                            >
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Horror'"
+                                    />
+                                    Horror
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Music'"
+                                    />
+                                    Music
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Musical'"
+                                    />
+                                    Musical
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Mystery'"
+                                    />
+                                    Mystery
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Romance'"
+                                    />
+                                    Romance
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Sci-Fi'"
+                                    />
+                                    Sci-Fi
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Short'"
+                                    />
+                                    Short
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Thriller'"
+                                    />
+                                    Thriller
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'War'"
+                                    />
+                                    War
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="pivot-cb"
+                                        type="checkbox"
+                                        value="'Western'"
+                                    />
+                                    Western
+                                </label>
+                            </div>
+                        </form>
                     </div>
+                </div>
+
+                <!-- Drill Down Chart -->
+                <div class="w-full mb-16">
+                    <div class="flex">
+                        <div
+                            id="myChart3"
+                            class="w-full flex-1"
+                            style="aspect-ratio: 16/9"
+                        ></div>
+                        <form action="" id="rollup-form-genre">
+                            <p class="font-semibold">DIRECTORS</p>
+                            <div
+                                class="
+                                    input-container
+                                    flex
+                                    justify-evenly
+                                    flex-col
+                                "
+                            >
+                                <label class="mr-3">
+                                    <input
+                                        class="drilldown-cb"
+                                        type="checkbox"
+                                        checked
+                                    />
+                                    <span class="drilldown-label"></span>
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="drilldown-cb"
+                                        type="checkbox"
+                                    />
+                                    <span class="drilldown-label"></span>
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="drilldown-cb"
+                                        type="checkbox"
+                                    />
+                                    <span class="drilldown-label"></span>
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="drilldown-cb"
+                                        type="checkbox"
+                                    />
+                                    <span class="drilldown-label"></span>
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="drilldown-cb"
+                                        type="checkbox"
+                                    />
+                                    <span class="drilldown-label"></span>
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="drilldown-cb"
+                                        type="checkbox"
+                                    />
+                                    <span class="drilldown-label"></span>
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="drilldown-cb"
+                                        type="checkbox"
+                                    />
+                                    <span class="drilldown-label"></span>
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="drilldown-cb"
+                                        type="checkbox"
+                                    />
+                                    <span class="drilldown-label"></span>
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="drilldown-cb"
+                                        type="checkbox"
+                                    />
+                                    <span class="drilldown-label"></span>
+                                </label>
+                                <label class="mr-3">
+                                    <input
+                                        class="drilldown-cb"
+                                        type="checkbox"
+                                    />
+                                    <span class="drilldown-label"></span>
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Dice Chart -->
+                <div class="w-full p-4">
+                    <div
+                        id="myChart4"
+                        style="width: 100%; aspect-ratio: 16/9"
+                    ></div>
                 </div>
             </div>
         </main>

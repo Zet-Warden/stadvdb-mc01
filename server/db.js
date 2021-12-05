@@ -21,8 +21,8 @@ let pool;
         });
     },
     disconnect: () => connection.end(),
-};
- */
+}; */
+
 const database = {
     connect: () => {
         pool = mysql.createPool({
@@ -40,6 +40,7 @@ const database = {
             callback(error, results, fields);
         });
     },
+    disconnect: () => connection.end(),
 };
 
 module.exports = database;

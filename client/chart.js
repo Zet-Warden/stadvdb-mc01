@@ -1,33 +1,64 @@
-async function generateChart({ chartId }) {
-    const query = ` SELECT d.first_name as first_name, d.last_name as last_name, d.director_id, ROUND(avg(ft.movie_rank),5) as rating
-                    FROM fact_table ft JOIN directors d ON ft.director_id = d.director_id
-                    GROUP BY d.director_id, d.last_name, d.first_name
-                    ORDER BY rating DESC, d.director_id DESC
-                    LIMIT 10;`;
-
-    const queryParams = new URLSearchParams();
-    queryParams.set('query', query);
-
-    console.log('hello');
-    const res = await fetch(`/api?${queryParams}`);
-    const data = await res.json();
-
+async function generateChart({
+    chartId,
+    seriesName = 'My Series',
+    seriesData,
+    categories,
+    yMax = undefined,
+    xMax = undefined,
+    xTickInterval = undefined,
+    title = 'My Chart',
+    subtitle = 'My Subtitle',
+    type = 'bar',
+    stacking = undefined,
+    tooltipFormatter,
+    pointStart = 0,
+    zoomType = undefined,
+    xAllowDecimals,
+}) {
+    //console.log(seriesData);
     const chart = Highcharts.chart(chartId, {
         chart: {
-            type: 'bar',
+            type: type,
+            zoomType: zoomType,
         },
         title: {
-            text: 'Fruit Consumption',
+            text: title,
+            align: 'left',
+        },
+        subtitle: {
+            text: subtitle,
+            align: 'left',
+        },
+        tooltip: {
+            formatter: tooltipFormatter,
         },
         xAxis: {
-            categories: data.map((e) => e.last_name),
+            categories: categories,
+            max: xMax,
+            allowDecimals: xAllowDecimals,
         },
-        series: [
-            {
-                name: 'ranking',
-                data: data.map((e) => e.rating),
+        yAxis: {
+            max: yMax,
+            tickInterval: xTickInterval,
+            stackLabels: {
+                enabled: true,
             },
-        ],
+        },
+        plotOptions: {
+            column: {
+                stacking: stacking,
+                dataLabels: {
+                    enabled: true,
+                },
+            },
+            row: {
+                colorByPoint: true,
+            },
+            series: {
+                pointStart: pointStart,
+            },
+        },
+        series: seriesData,
         credits: {
             enabled: false,
         },
