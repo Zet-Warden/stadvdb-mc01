@@ -15,7 +15,7 @@ const submitBtn = document.querySelector('#rollup-submit');
 let canQuery = true;
 
 function queryTimeOut() {
-    canQuery = false;
+    //canQuery = false;
     setTimeout(() => {
         canQuery = true;
     }, 2000);

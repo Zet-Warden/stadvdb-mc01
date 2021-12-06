@@ -11,7 +11,7 @@ const minSlider = document.querySelector('#pivot-slider');
 let canQuery = true;
 
 function queryTimeOut() {
-    canQuery = false;
+    //canQuery = false;
     setTimeout(() => {
         canQuery = true;
     }, 2000);
@@ -27,7 +27,7 @@ allGenreCheckbox.addEventListener('change', () => {
     if (allGenreCheckbox.checked) {
         checkAllGenreBox();
         const whereCondition = generateGenreCondition();
-        if (canQuery) displayChart(whereCondition);
+        if (canQuery) displayChart(whereCondition, minSlider.value);
     }
 });
 
@@ -35,7 +35,7 @@ genreCheckboxes.forEach((cb) => {
     cb.checked = true;
     cb.addEventListener('change', () => {
         const whereCondition = generateGenreCondition();
-        if (canQuery) displayChart(whereCondition);
+        if (canQuery) displayChart(whereCondition, minSlider.value);
         if (!cb.checked) allGenreCheckbox.checked = false;
     });
 });
@@ -46,7 +46,7 @@ minSlider.addEventListener('input', () => {
 
 minSlider.addEventListener('change', () => {
     const whereCondition = generateGenreCondition();
-    if (canQuery) displayChart(whereCondition);
+    if (canQuery) displayChart(whereCondition, minSlider.value);
 });
 
 function generateGenreCondition() {
